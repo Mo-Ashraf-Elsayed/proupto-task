@@ -1,0 +1,7 @@
+:host ::ng-deep .p-table .p-datatable-row-expansion {
+  background-color: #f9f9f9;
+}
+.custom-datepicker-popup {
+  transform: translateY(-100%) !important; /* Moves calendar above */
+  margin-bottom: 10px;
+}

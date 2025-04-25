@@ -1,0 +1,45 @@
+@if(control.errors&&
+control.touched && !control.getError('mismatch')){
+@if(control.getError('required')){
+<p-message severity="error">This Input is Required</p-message>
+}@if(control.getError('minlength')){
+<p-message severity="error">
+    @if(inputName == 'name'){
+    This input must be at least 5 characters
+    }
+</p-message>
+}
+@if(control.getError('maxlength')){
+<p-message severity="error">
+    @if(inputName == 'name'){
+    This input mustn't exceed 20 characters
+    }
+</p-message>
+}
+}
+
+@if(control.get('endDate')?.touched
+&&control.getError('mismatch')){
+<p-message severity="error">
+    The end date must be after start date
+</p-message>
+}
+
+@if(control.touched && control.hasError('unexpectedStartDate')){
+
+<p-message severity="error">
+    @if(inputName == 'startDate'){
+    Un expected start date it is must be in the range of course duration
+
+    }
+</p-message>
+}
+@if(control.touched && control.hasError('unexpectedEndDate')){
+<p-message severity="error">
+    @if(inputName == 'endDate'){
+    Un expected end date it is must be in the range of course duration and after
+    the start date of subcourseeeeeeeeeeeee
+    }
+</p-message>
+}
+<!-- The End Date Of Subcourse Mustn't be after the end date of the coures -->
