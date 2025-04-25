@@ -51,53 +51,6 @@ export class CourseService {
       ],
     },
   ]);
-  // courses$ = this.coursesSubject.asObservable();
-  // COURSES: Course[] = [
-  //   {
-  //     id: 1,
-  //     name: 'course 1',
-  //     startDate: new Date('2024-05-01'),
-  //     endDate: new Date('2024-06-01'),
-  //     subcourses: [
-  //       {
-  //         id: 101,
-  //         name: 'subcourse 1',
-  //         startDate: new Date('2024-05-01'),
-  //         endDate: new Date('2024-05-07'),
-  //         CourseId: 1,
-  //       },
-  //       {
-  //         id: 102,
-  //         name: 'subcourse 2',
-  //         startDate: new Date('2024-05-08'),
-  //         endDate: new Date('2024-05-14'),
-  //         CourseId: 1,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'course 2',
-  //     startDate: new Date('2024-07-01'),
-  //     endDate: new Date('2024-08-01'),
-  //     subcourses: [
-  //       {
-  //         id: 201,
-  //         name: 'subcourse 2',
-  //         startDate: new Date('2024-07-01'),
-  //         endDate: new Date('2024-07-07'),
-  //         CourseId: 2,
-  //       },
-  //       {
-  //         id: 202,
-  //         name: 'subcourse 2',
-  //         startDate: new Date('2024-07-08'),
-  //         endDate: new Date('2024-07-14'),
-  //         CourseId: 2,
-  //       },
-  //     ],
-  //   },
-  // ];
 
   private generateId(): number {
     return Math.floor(Math.random() * 100000);
@@ -157,36 +110,15 @@ export class CourseService {
     // current.map((course) => {
     //   if (course.id == courseId) {
     //     course.subcourses = course.subcourses.map((c) => {
-    //       console.log('hi');
+    //       console.log('Ashraf');
     //       return c.id == updatedSubcourse.id ? updatedSubcourse : c;
     //     });
     //   }
     // });
-
     // current
     //   .find((course) => course.id == courseId)
     //   ?.subcourses.map((c) =>
     //     c.id === updatedSubcourse.id ? updatedSubcourse : c
     //   );
-    // console.log('hi');
-  }
-  editSubcourse(updatedSubcourse: Subcourse): void {
-    const course = this.coursesSubject
-      .getValue()
-      .find((c) => c.id === updatedSubcourse.CourseId);
-    if (!course) {
-      console.error('Course not found for Subcourse');
-      return;
-    }
-
-    const subIndex = course.subcourses.findIndex(
-      (sc) => sc.id === updatedSubcourse.id
-    );
-    if (subIndex === -1) {
-      console.error('Subcourse not found');
-      return;
-    }
-
-    course.subcourses[subIndex] = { ...updatedSubcourse };
   }
 }

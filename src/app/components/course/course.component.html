@@ -4,7 +4,6 @@
 </div>
 
 <!-- Dialog Box -->
-<!-- @if (checkOnPlatformId()) { -->
 <p-dialog
     [header]="
         crudCase == 'addCourse' ? 'Add Course' :
@@ -60,11 +59,10 @@
                     appendTo="body"
                     panelStyleClass="custom-datepicker-popup"></p-datepicker>
 
-                @if(crudCase ==='addSubCourse' || crudCase==='editSubCourse'){
                 <app-validation-messages
                     [control]="coursesForm.get('endDate')!"
                     inputName="endDate"></app-validation-messages>
-                }<app-validation-messages
+                <app-validation-messages
                     [control]="coursesForm"
                     inputName="endDate"></app-validation-messages>
 
@@ -78,7 +76,6 @@
         </div>
     </form>
 </p-dialog>
-<!-- } -->
 
 <!-- Main Table -->
 <p-table [value]="courses" dataKey="id">

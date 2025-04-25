@@ -1,5 +1,3 @@
-// ----------------------
-
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import {
   AbstractControl,
@@ -12,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { Course } from '../../models/course.interface';
 import { CourseService } from '../../services/cources.service';
-import { DatePipe, isPlatformBrowser } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Dialog } from 'primeng/dialog';
 import { CrudCase } from '../../models/crud-case.type';
 import { Subcourse } from '../../models/sub-course.interface';
@@ -70,12 +68,7 @@ export class CourseComponent implements OnInit {
     if (this.coursesForm.valid) {
       if (this.crudCase === 'addCourse') {
         this._courseService.addCourse(this.coursesForm.value);
-        console.log(
-          this.coursesForm.value.startDate < this.coursesForm.value.endDate
-        );
-        console.log(
-          this.coursesForm.value.startDate > this.coursesForm.value.endDate
-        );
+
         this.resetForm();
       } else if (this.crudCase === 'addSubCourse') {
         this._courseService.addSubcourse(
@@ -157,62 +150,33 @@ export class CourseComponent implements OnInit {
     return control.get('startDate')?.value <= control.get('endDate')?.value
       ? null
       : { mismatch: true };
-    // if (control.get('startDate')?.value <= control.get('endDate')?.value) {
-    //   return null;
-    // } else if (
-    //   !control.get('startDate')?.value <= control.get('endDate')?.value
-    // ) {
-    //   return { mismatch: true };
-    // } else if (
-    //   control.get('startDate')?.value < this.selectedCourse.startDate &&
-    //   control.get('endDate')?.value > this.selectedCourse.endDate
-    // ) {
-    //   return null;
-    // } else {
-    //   if (control.get('startDate')?.value > this.selectedCourse.startDate) {
-    //     return { mismatchSub: { mismatchStartDate: true } };
-    //   } else if (control.get('endDate')?.value < this.selectedCourse.endDate) {
-    //     return { mismatchSub: { mismatchEndDate: true } };
-    //   } else {
-    //     return { mismatchSub: { mismatctStartAndEndDate: true } };
-    //   }
-    // }
   }
   onDateChange() {
+    let startDateValue = new Date(this.coursesForm.get('startDate')?.value);
+    let startDateCourse = new Date(this.selectedCourse.startDate);
+    let endDateValue = new Date(this.coursesForm.get('endDate')?.value);
+    let endDateCourse = new Date(this.selectedCourse.endDate);
+    startDateValue.setHours(0, 0, 0, 0);
+    startDateCourse.setHours(0, 0, 0, 0);
+    endDateValue.setHours(0, 0, 0, 0);
+    endDateCourse.setHours(0, 0, 0, 0);
     if (this.crudCase === 'editSubCourse' || this.crudCase === 'addSubCourse') {
-      if (
-        this.selectedCourse.startDate > this.coursesForm.get('startDate')?.value
-      ) {
+      if (startDateCourse.getTime() > startDateValue.getTime()) {
         this.coursesForm
           .get('startDate')
           ?.setErrors({ unexpectedStartDate: true });
-        return;
       }
-      if (
-        this.selectedCourse.endDate < this.coursesForm.get('startDate')?.value
-      ) {
+      if (endDateCourse.getTime() < startDateValue.getTime()) {
         this.coursesForm
           .get('startDate')
           ?.setErrors({ unexpectedStartDate: true });
-        return;
       }
-      if (
-        this.coursesForm.get('endDate')?.value <= this.selectedCourse.startDate
-      ) {
+      if (endDateValue.getTime() <= startDateCourse.getTime()) {
         this.coursesForm.get('endDate')?.setErrors({ unexpectedEndDate: true });
-        console.log(this.coursesForm.get('endDate')?.value);
-        console.log(this.selectedCourse.endDate);
-        return;
       }
-      if (
-        this.coursesForm.get('endDate')?.value >= this.selectedCourse.endDate
-      ) {
-        console.log(this.coursesForm.get('endDate')?.value);
-        console.log(this.selectedCourse.endDate);
+      if (endDateValue.getTime() >= endDateCourse.getTime()) {
         this.coursesForm.get('endDate')?.setErrors({ unexpectedEndDate: true });
-        return;
       }
-
       return;
     }
   }
